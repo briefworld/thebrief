@@ -20,7 +20,12 @@ jobs:
           git clone https://$GH_TOKEN@github.com/iArchitSharma/thebrief-post-generator.git
           cd thebrief-post-generator
 
-      - name: Install Dependencies
+      - name: Install Missing Dependencies for PhantomJS
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libfontconfig1 libssl-dev
+
+      - name: Install Node.js Dependencies
         run: |
           cd thebrief-post-generator
           npm install
