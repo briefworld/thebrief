@@ -24,7 +24,7 @@ jobs:
         run: |
           cd thebrief-post-generator
           npm install
-          npm install phantomjs-prebuilt --save
+          npm install -g svg2png-cli  
 
       - name: Run Generator Script
         run: |
