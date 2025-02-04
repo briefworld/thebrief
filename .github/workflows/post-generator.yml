@@ -20,18 +20,11 @@ jobs:
           git clone https://$GH_TOKEN@github.com/iArchitSharma/thebrief-post-generator.git
           cd thebrief-post-generator
 
-      - name: Install System Dependencies  # ✅ Fix PhantomJS issues
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libfontconfig1 libssl-dev fonts-noto fonts-noto-cjk fonts-noto-color-emoji
-          sudo apt-get install -y openssl1.1  # Install OpenSSL 1.1 explicitly
-          echo "Using OpenSSL version:"
-          openssl version
-
-      - name: Install Node.js Dependencies
+      - name: Install Dependencies
         run: |
           cd thebrief-post-generator
           npm install
+          npm install phantomjs-prebuilt --save
 
       - name: Run Generator Script
         run: |
