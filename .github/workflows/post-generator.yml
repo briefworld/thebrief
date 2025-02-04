@@ -24,7 +24,7 @@ jobs:
         run: |
           cd thebrief-post-generator
           npm install
-          npm install -g svg2png-cli  
+          npm install puppeteer --save
 
       - name: Run Generator Script
         run: |
