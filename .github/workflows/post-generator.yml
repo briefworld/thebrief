@@ -20,10 +20,10 @@ jobs:
           git clone https://$GH_TOKEN@github.com/iArchitSharma/thebrief-post-generator.git
           cd thebrief-post-generator
 
-      - name: Install Missing Dependencies for PhantomJS
+      - name: Install System Dependencies  # ✅ Fixes PhantomJS & svg2png issues
         run: |
           sudo apt-get update
-          sudo apt-get install -y libfontconfig1 libssl-dev
+          sudo apt-get install -y libfontconfig1 libssl-dev fonts-noto fonts-noto-cjk fonts-noto-color-emoji
 
       - name: Install Node.js Dependencies
         run: |
