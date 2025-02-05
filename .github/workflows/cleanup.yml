@@ -1,0 +1,26 @@
+name: Cleanup Output Directory
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs every 24 hours at midnight UTC
+  workflow_dispatch: 
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Remove Output Directory Contents
+        run: |
+          rm -rf output/*  # Deletes all files inside the output directory
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add output/
+          git commit -m "Cleanup: Deleted all files inside output directory" || echo "No changes to commit"
+          git push
