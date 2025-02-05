@@ -2,8 +2,8 @@ name: Cleanup Output Directory
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Runs every 24 hours at midnight UTC
-  workflow_dispatch: 
+    - cron: '0 0 * * *'  # Runs every 24 hours
+  workflow_dispatch:  
 
 jobs:
   cleanup:
@@ -12,15 +12,19 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false  # Disable default GitHub token
 
       - name: Remove Output Directory Contents
         run: |
-          rm -rf output/*  # Deletes all files inside the output directory
+          rm -rf output/*  # Deletes all files inside output directory
 
       - name: Commit and Push Changes
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add output/
           git commit -m "Cleanup: Deleted all files inside output directory" || echo "No changes to commit"
-          git push
+          git push https://x-access-token:${GH_PAT}@github.com/iArchitSharma/thebrief.git HEAD:main
