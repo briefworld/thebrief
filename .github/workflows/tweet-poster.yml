@@ -1,4 +1,4 @@
-name: Post Generator
+name: Tweet Generator
 
 on:
   workflow_dispatch:  # Manual trigger
@@ -6,7 +6,7 @@ on:
     - cron: "*/30 * * * *"  # Runs every 30 minutes
 
 jobs:
-  post-generator:
+  tweet-generator:
     runs-on: ubuntu-latest
 
     steps:
