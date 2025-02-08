@@ -1,0 +1,31 @@
+name: Post Generator
+
+on:
+  workflow_dispatch:  # Manual trigger
+  schedule:
+    - cron: "*/30 * * * *"  # Runs every 30 minutes
+
+jobs:
+  post-generator:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Public Repo
+        uses: actions/checkout@v4
+
+      - name: Clone Private Repo
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          git clone https://$GH_TOKEN@github.com/iArchitSharma/twitterPoster-thebrief.git
+          cd twitterPoster-thebrief
+
+      - name: Install Dependencies
+        run: |
+          cd twitterPoster-thebrief
+          npm install
+
+      - name: Run Generator Script
+        run: |
+          cd twitterPoster-thebrief
+          node index.js
