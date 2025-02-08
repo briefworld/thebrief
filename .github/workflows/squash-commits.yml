@@ -28,10 +28,14 @@ jobs:
         git reset --soft $(git rev-list --max-parents=0 HEAD)
         git commit -m "Squashed all commits into one"
 
-        # Force push the squashed commit to the main branch
+        # Switch back to the main branch
         git checkout main
+
+        # Merge the squashed commit into main
         git merge --squash squashed-commits
         git commit -m "Squashed all commits into one"
+
+        # Force push the squashed commit to the main branch
         git branch -D squashed-commits
         git push origin main --force
 
