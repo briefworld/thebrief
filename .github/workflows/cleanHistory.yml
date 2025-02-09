@@ -25,12 +25,12 @@ jobs:
         # Remove all historical PNG files in the output/ directory
         git filter-repo --path-glob 'output/*.png' --invert-paths
 
-    - name: Configure Git
+    - name: Reconfigure Git remote
       run: |
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
-        # Reconfigure the remote URL
-        git remote set-url origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+        # Re-add the origin remote
+        git remote add origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
 
     - name: Force push cleaned history
       run: git push origin HEAD:main --force
