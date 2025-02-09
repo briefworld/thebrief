@@ -22,10 +22,9 @@ jobs:
 
     - name: Clean output/*.png history
       run: |
-        # Remove all historical PNG files in the output/ directory
         git filter-repo \
-          --path-glob 'output/*.png' \  # Target only PNGs in output/
-          --invert-paths                # Remove these files from history
+          --path-glob 'output/*.png' \  
+          --invert-paths 
 
     - name: Configure Git
       run: |
