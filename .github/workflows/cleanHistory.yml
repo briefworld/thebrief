@@ -1,0 +1,36 @@
+name: Clean output/*.png History
+
+on:
+  workflow_dispatch:  # Manual trigger for safety
+
+permissions:
+  contents: write     # Required for force pushing
+
+jobs:
+  filter-repo:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Get full history
+
+    - name: Install git-filter-repo
+      run: |
+        sudo apt-get update && sudo apt-get install -y python3-pip
+        pip3 install git-filter-repo
+
+    - name: Clean output/*.png history
+      run: |
+        # Remove all historical PNG files in the output/ directory
+        git filter-repo \
+          --path-glob 'output/*.png' \  # Target only PNGs in output/
+          --invert-paths                # Remove these files from history
+
+    - name: Configure Git
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+
+    - name: Force push cleaned history
+      run: git push origin HEAD:${{ github.ref_name }} --force
